@@ -5,7 +5,7 @@ Projet Blog Openclassrooms du parcours développeur d'applications PHP / SYMFONY
 
 Projet réalisé dans le cadre du parcours développeur d'applications PHP / SYMFONY effectué chez [Openclassrooms](https://openclassrooms.com/).
 
-[![SymfonyInsight](https://insight.symfony.com/projects/29af6273-7fc9-4cd4-be09-743d3555ef3a/mini.svg)](https://insight.symfony.com/projects/29af6273-7fc9-4cd4-be09-743d3555ef3a)
+[![SymfonyInsight](https://insight.symfony.com/projects/29af6273-7fc9-4cd4-be09-743d3555ef3a/mini.svg)](https://insight.symfony.com/projects/29af6273-7fc9-4cd4-be09-743d3555ef3a) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/aea4515b884b4660b3f61911b160f009)](https://www.codacy.com/gh/AlexandreCavanna/OC-Projet-5_Blog/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AlexandreCavanna/OC-Projet-5_Blog&amp;utm_campaign=Badge_Grade)
 
 ## Contexte
 

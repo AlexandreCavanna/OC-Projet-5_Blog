@@ -5,6 +5,7 @@ Projet Blog Openclassrooms du parcours développeur d'applications PHP / SYMFONY
 
 Projet réalisé dans le cadre du parcours développeur d'applications PHP / SYMFONY effectué chez [Openclassrooms](https://openclassrooms.com/).
 
+[![SymfonyInsight](https://insight.symfony.com/projects/03206002-4128-4dcf-a466-fb6c88170d73/mini.svg)](https://insight.symfony.com/projects/03206002-4128-4dcf-a466-fb6c88170d73)
 
 ## Contexte
 

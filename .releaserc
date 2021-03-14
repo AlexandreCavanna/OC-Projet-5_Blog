@@ -7,6 +7,7 @@
         "preset": "conventionalcommits",
         "releaseRules": [
           {"type": "ci", "scope":"github action", "release": "patch"},
+          {"type": "setup", "release": "patch"}
         ],
       }
     ],
@@ -52,9 +53,14 @@
               "hidden": false
             },
             {
+              "type": "setup",
+              "section": ":white_check_mark: Setup",
+              "hidden": false
+            },
+            {
               "type": "chore",
               "hidden": true
-            }
+            },
           ]
         },
         "writerOpts": {

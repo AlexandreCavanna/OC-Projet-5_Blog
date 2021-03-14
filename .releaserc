@@ -56,6 +56,9 @@
               "hidden": true
             }
           ]
+        },
+        "writerOpts": {
+          "date": 'dd-mm-yyyy'
         }
       }
     ],

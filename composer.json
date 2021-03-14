@@ -1,0 +1,16 @@
+{
+    "name": "alexandre/oc-projet-5_blog",
+    "description": "Project carried out as part of my training at Openclassrooms of the PHP / SYMFONY application developer course.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexandre Cavanna",
+            "email": "alexandre.cavanna.pro@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"App\\": "src/"}
+    },
+    "require": {}
+}

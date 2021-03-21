@@ -10,29 +10,36 @@ use Symfony\Component\Routing\RequestContext;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$request = Request::createFromGlobals();
+class FrontController
+{
+    public function __construct()
+    {
+        $request = Request::createFromGlobals();
 
-$routes = require __DIR__ . '/../src/routes.php';
+        $routes = require __DIR__ . '/../src/routes.php';
 
-$context = new RequestContext();
-$context->fromRequest($request);
+        $context = new RequestContext();
+        $context->fromRequest($request);
 
-$urlMatcher = new UrlMatcher($routes, $context);
+        $urlMatcher = new UrlMatcher($routes, $context);
 
-$controllerResolver = new ControllerResolver();
-$argumentResolver = new ArgumentResolver();
+        $controllerResolver = new ControllerResolver();
+        $argumentResolver = new ArgumentResolver();
 
-try {
-    $request->attributes->add($urlMatcher->match($request->getPathInfo()));
+        try {
+            $request->attributes->add($urlMatcher->match($request->getPathInfo()));
 
-    $controller = $controllerResolver->getController($request);
-    $arguments = $argumentResolver->getArguments($request, $controller);
+            $controller = $controllerResolver->getController($request);
+            $arguments = $argumentResolver->getArguments($request, $controller);
 
-    $response = call_user_func_array($controller, $arguments);
-} catch (ResourceNotFoundException $e) {
-    $response = new Response("Le page demandée n'existe pas", 404);
-} catch (Exception $e) {
-    $response = new Response("Une erreur est survenue", 500);
+            $response = call_user_func_array($controller, $arguments);
+        } catch (ResourceNotFoundException $e) {
+            $response = new Response("Le page demandée n'existe pas", 404);
+        } catch (Exception $e) {
+            $response = new Response("Une erreur est survenue", 500);
+        }
+        $response->send();
+    }
 }
 
-$response->send();
+new FrontController();

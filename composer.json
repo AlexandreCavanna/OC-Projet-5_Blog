@@ -15,6 +15,7 @@
     "require": {
         "symfony/routing": "^5.2",
         "symfony/http-foundation": "^5.2",
+        "twig/twig": "^3.3",
         "symfony/http-kernel": "^5.2"
     },
     "require-dev": {

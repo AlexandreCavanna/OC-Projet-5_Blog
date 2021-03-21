@@ -1,3 +1,16 @@
+## [1.1.0](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/compare/v1.0.0...v1.1.0) (2021-03-21)
+
+
+### :white_check_mark: Setup
+
+* **composer:** Initialize composer ([#2](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/issues/2)) ([0c771da](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/0c771da339b244c2f945486a0803a735b0f6c43b))
+
+
+### :sparkles: Features
+
+* **mvc architecture:** Add router ([#5](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/issues/5)) ([2efed3c](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/2efed3c955d17dc155b043312e52a338b401fb0c))
+* **mvc architecture:** Add twig to render views ([#7](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/issues/7)) ([ceb724f](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/ceb724f278a1557c848d974fae908944e4781348))
+
 ## 1.0.0 (2021-03-14)
 
 

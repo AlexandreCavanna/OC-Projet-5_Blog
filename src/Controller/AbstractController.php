@@ -16,7 +16,7 @@ class AbstractController
      */
     public function load(string $view, $params = []): string
     {
-        $loader = new FilesystemLoader('../src/views');
+        $loader = new FilesystemLoader('../views');
         $twig = new Environment($loader, [
             'cache' => '../cache/twig',
             'auto_reload' => true

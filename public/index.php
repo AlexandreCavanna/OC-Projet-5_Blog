@@ -1,45 +1,25 @@
 <?php
 
+use FireStorm\Framework;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-class FrontController
-{
-    public function __construct()
-    {
-        $request = Request::createFromGlobals();
+$request = Request::createFromGlobals();
+$routes = require __DIR__ . '/../src/routes.php';
 
-        $routes = require __DIR__ . '/../src/routes.php';
 
-        $context = new RequestContext();
-        $context->fromRequest($request);
+$context = new RequestContext();
+$matcher = new UrlMatcher($routes, $context);
 
-        $urlMatcher = new UrlMatcher($routes, $context);
+$controllerResolver = new ControllerResolver();
+$argumentResolver = new ArgumentResolver();
 
-        $controllerResolver = new ControllerResolver();
-        $argumentResolver = new ArgumentResolver();
+$framework = new Framework($matcher, $controllerResolver, $argumentResolver);
+$response = $framework->handle($request);
 
-        try {
-            $request->attributes->add($urlMatcher->match($request->getPathInfo()));
-
-            $controller = $controllerResolver->getController($request);
-            $arguments = $argumentResolver->getArguments($request, $controller);
-
-            $response = call_user_func_array($controller, $arguments);
-        } catch (ResourceNotFoundException $e) {
-            $response = new Response("Le page demandée n'existe pas", 404);
-        } catch (Exception $e) {
-            $response = new Response("Une erreur est survenue", 500);
-        }
-        $response->send();
-    }
-}
-
-new FrontController();
+$response->send();

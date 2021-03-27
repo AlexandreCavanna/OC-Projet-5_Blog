@@ -10,13 +10,19 @@
         }
     ],
     "autoload": {
-        "psr-4": {"App\\": "src/"}
+        "psr-4": {
+          "App\\": "src/",
+          "FireStorm\\": "FireStorm/"
+        }
     },
     "require": {
         "symfony/routing": "^5.2",
         "symfony/http-foundation": "^5.2",
         "twig/twig": "^3.3",
-        "symfony/http-kernel": "^5.2"
+        "symfony/http-kernel": "^5.2",
+        "ext-pdo": "*",
+        "phpmailer/phpmailer": "^6.3",
+        "phpunit/phpunit": "^9.5"
     },
     "require-dev": {
         "symfony/var-dumper": "^5.2"

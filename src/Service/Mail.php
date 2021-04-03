@@ -50,7 +50,7 @@ class Mail
         $mail = new PHPMailer();
         $mail->isSMTP();
 
-        $this->ConfigureMail($mail);
+        $this->configureMail($mail);
 
         try {
             $mail->setFrom('blog@alexandrecavanna.fr', 'Contact form Blog');
@@ -89,7 +89,7 @@ class Mail
     /**
      * @param PHPMailer $mail
      */
-    private function ConfigureMail(PHPMailer $mail): void
+    private function configureMail(PHPMailer $mail): void
     {
         $mail->Host = 'smtp.gmail.com';
         $mail->Port = 587;

@@ -12,8 +12,8 @@ class Post
     private string $chapo;
     private string $author;
     private string $content;
-    private $created_at;
-    private $modify_at;
+    private $createdAt;
+    private $modifyAt;
 
     /**
      * @param array $data
@@ -122,32 +122,32 @@ class Post
     /**
      * @return mixed
      */
-    public function getCreated_at()
+    public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param mixed $created_at
+     * @param $createdAt
      */
-    public function setCreated_at($created_at): void
+    public function setCreatedAt($createdAt): void
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
     }
 
     /**
      * @return mixed
      */
-    public function getModify_at()
+    public function getModifyAt()
     {
-        return $this->modify_at;
+        return $this->modifyAt;
     }
 
     /**
-     * @param mixed $modify_at
+     * @param mixed $modifyAt
      */
-    public function setModify_at($modify_at): void
+    public function setModifyAt($modifyAt): void
     {
-        $this->modify_at = $modify_at;
+        $this->modifyAt = $modifyAt;
     }
 }

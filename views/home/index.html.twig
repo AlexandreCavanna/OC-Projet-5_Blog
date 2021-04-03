@@ -60,6 +60,8 @@
             </div>
             <button type="submit" class="btn btn-primary mb-4">Envoyer</button>
         </form>
+        <p class="text-center text-danger font-weight-bold">{{ session.email_error }}</p>
+        <p class="text-center text-success font-weight-bold">{{ session.email_success }}</p>
     </div>
 
 {% endblock %}

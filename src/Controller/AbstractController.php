@@ -1,26 +1,33 @@
 <?php
 namespace App\Controller;
 
+use App\Config\Container;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 class AbstractController
 {
     /**
-     * @param string $view
-     * @param array $params
-     * @return string
+     * @var Container
      */
-    public function load(string $view, $params = []): string
+    protected Container $container;
+
+
+    public function __construct(Container $container)
     {
-        $loader = new FilesystemLoader('../views');
-        $twig = new Environment($loader, [
-            'cache' => '../cache/twig',
-            'auto_reload' => true
-        ]);
+        $this->container = $container;
+    }
+
+
+    public function render(string $view, $params = []): string
+    {
+       $twig = $this->container->build()->get('twig');
+       $twig->addExtension(new DebugExtension());
+       $twig->addGlobal('session', $_SESSION);
 
         try {
             return $twig->render($view, $params);

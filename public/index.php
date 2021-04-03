@@ -1,25 +1,31 @@
 <?php
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
+
+use App\Config\Container;
 use FireStorm\Framework;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
-use Symfony\Component\HttpKernel\Controller\ControllerResolver;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
-use Symfony\Component\Routing\RequestContext;
 
-require __DIR__ . '/../vendor/autoload.php';
+class Front
+{
+    private Container $container;
 
-$request = Request::createFromGlobals();
-$routes = require __DIR__ . '/../src/routes.php';
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
 
+    public function run()
+    {
+        session_start();
+        $this->container->build()->setParameter('routes', include __DIR__.'/../src/routes.php');
+        $request = Request::createFromGlobals();
+        $response = $this->container->build()->get(Framework::class)->handle($request);
+        $response->send();
+    }
+}
 
-$context = new RequestContext();
-$matcher = new UrlMatcher($routes, $context);
-
-$controllerResolver = new ControllerResolver();
-$argumentResolver = new ArgumentResolver();
-
-$framework = new Framework($matcher, $controllerResolver, $argumentResolver);
-$response = $framework->handle($request);
-
-$response->send();
+$front = new Front(new Container(new ContainerBuilder()));
+$front->run();

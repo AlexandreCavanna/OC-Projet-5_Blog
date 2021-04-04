@@ -44,29 +44,21 @@ class Mail
     }
 
 
-
-    public function sendMail(): void
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public function sendMail(): string
     {
         $mail = new PHPMailer();
         $mail->isSMTP();
 
         $this->configureMail($mail);
 
-        try {
-            $mail->setFrom('blog@alexandrecavanna.fr', 'Contact form Blog');
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-        try {
-            $mail->addAddress('alexandre.cavanna.pro@gmail.com', 'Alexandre CAVANNA');
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-        try {
-            $mail->addReplyTo($this->email, $this->name);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
+        $mail->setFrom('blog.acavanna@gmail.com', 'Contact form Blog');
+        $mail->addAddress('blog.acavanna@gmail.com', 'Alexandre CAVANNA');
+        $mail->addReplyTo($this->email, $this->name);
+
         $mail->Subject = 'Contact Form from my Blog';
 
         $mail->Body = <<<EOT
@@ -75,14 +67,10 @@ class Mail
             Message: {$this->message}
             EOT;
 
-        try {
-            if (!$mail->send()) {
-                $_SESSION["email_error"] = $mail->ErrorInfo;
-            } else {
-                $_SESSION["email_success"] = 'Votre email vient d\'être envoyé !';
-            }
-        } catch (Exception $e) {
-            echo $e->getMessage();
+        if (!$mail->send()) {
+            return $_SESSION["email_error"] = $mail->ErrorInfo;
+        } else {
+            return $_SESSION["email_success"] = 'Votre email vient d\'être envoyé !';
         }
     }
 
@@ -95,11 +83,11 @@ class Mail
         $mail->Port = 587;
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->SMTPAuth = true;
-        $mail->Username = 'alexandre.cavanna.pro@gmail.com';
-        $mail->Password = 'Alex9891';
+        $mail->Username = 'blog.acavanna@gmail.com';
+        $mail->Password = '6pWp6BkT4';
         $mail->CharSet = PHPMailer::CHARSET_UTF8;
-        $this->setEmail($_POST['email']);
-        $this->setName($_POST['name']);
-        $this->setMessage($_POST['message']);
+        $this->setEmail(filter_input(INPUT_POST, 'email'));
+        $this->setName(filter_input(INPUT_POST, 'name'));
+        $this->setMessage(filter_input(INPUT_POST, 'message'));
     }
 }

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center align-items-center flex-fill">
+        <div class="row row-cols-1-md align-items-center justify-content-center">
+            <div class="col text-center ">
+                <p class="display-5 text-danger">
+                {% if statusCode == 500 %}
+                    {{ 'HTTP ' ~  statusCode ~ ' Internal Server Error' }}
+                {% else %}
+                    {{ 'HTTP ' ~ statusCode ~ ' Resource Not Found' }}
+                </p>
+                <p class="display-4 text-danger">La ressource demandée n'existe pas.</p>
+                <p>Vous pouvez retourner à l'accueil pour voir nos derniers articles ou vous connectez !</p>
+                <a href="/" class="btn btn-primary">Retour à l'accueil</a>
+                <a href="/login" class="btn btn-danger">Connexion</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

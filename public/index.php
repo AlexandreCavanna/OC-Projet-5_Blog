@@ -1,31 +1,27 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-
-use App\Config\Container;
-use FireStorm\Framework;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
-class Front
-{
-    private Container $container;
+/** @var ContainerBuilder $container */
+$container = include '../src/Config/container.php';
 
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
+$container->setParameter('routes', include '../src/routes.php');
 
-    public function run()
-    {
-        session_start();
-        $this->container->build()->setParameter('routes', include __DIR__.'/../src/routes.php');
-        $request = Request::createFromGlobals();
-        $response = $this->container->build()->get(Framework::class)->handle($request);
-        $response->send();
-    }
+$session = new Session();
+$session->start();
+
+$request = Request::createFromGlobals();
+
+try {
+    $response = $container->get('framework')->handle($request);
+} catch (ServiceNotFoundException | ParameterNotFoundException $e ) {
+    echo $e->getMessage();
 }
 
-$front = new Front(new Container(new ContainerBuilder()));
-$front->run();
+$response->send();

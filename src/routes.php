@@ -1,13 +1,10 @@
 <?php
 
-use App\Config\Container;
 use App\Controller\HomeController;
 use App\Controller\PostController;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
-
-$container = new Container(new ContainerBuilder());
 
 $routes = new RouteCollection;
 

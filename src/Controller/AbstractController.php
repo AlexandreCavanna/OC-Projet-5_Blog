@@ -1,33 +1,35 @@
 <?php
 namespace App\Controller;
 
-use App\Config\Container;
+use Exception;
+use Symfony\Bridge\Twig\Extension\DumpExtension;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
+use Twig\TwigFunction;
 
 class AbstractController
 {
     /**
-     * @var Container
+     * @param string $view
+     * @param array $params
+     * @var Environment $twig
+     * @return string
+     * @throws Exception
      */
-    protected Container $container;
-
-
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
-
-
     public function render(string $view, $params = []): string
     {
-       $twig = $this->container->build()->get('twig');
-       $twig->addExtension(new DebugExtension());
-       $twig->addGlobal('session', $_SESSION);
+        $container = include __DIR__ . '/../Config/container.php';
+
+       /* @var Environment $twig */
+        $twig = $container->get('twig');
+        $twig->addFunction(new TwigFunction('dump', fn ($value) => dump($value)));
+        $twig->addGlobal('session', $_SESSION);
 
         try {
             return $twig->render($view, $params);

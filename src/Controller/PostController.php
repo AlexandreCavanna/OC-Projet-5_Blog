@@ -3,8 +3,6 @@
 
 namespace App\Controller;
 
-
-use App\Config\Container;
 use App\Repository\PostRepository;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +17,7 @@ class PostController extends AbstractController
     public function __construct()
     {
         $this->posts = new PostRepository();
-        parent::__construct(new Container(new ContainerBuilder()));
     }
-
 
     public function indexPosts(): Response
     {

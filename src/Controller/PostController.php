@@ -4,8 +4,10 @@
 namespace App\Controller;
 
 use App\Repository\PostRepository;
+use FireStorm\AbstractController;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Response;
+
 
 class PostController extends AbstractController
 {

@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace FireStorm;
 
 use Exception;
 use Symfony\Bridge\Twig\Extension\DumpExtension;
@@ -13,7 +13,7 @@ use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFunction;
 
-class AbstractController
+abstract class AbstractController
 {
     /**
      * @param string $view
@@ -24,7 +24,7 @@ class AbstractController
      */
     public function render(string $view, $params = []): string
     {
-        $container = include __DIR__ . '/../Config/container.php';
+        $container = include __DIR__ . '/container.php';
 
        /* @var Environment $twig */
         $twig = $container->get('twig');

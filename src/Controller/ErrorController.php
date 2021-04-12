@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use FireStorm\AbstractController;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Response;
 

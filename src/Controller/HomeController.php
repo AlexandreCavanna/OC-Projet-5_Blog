@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Service\Mail;
+use FireStorm\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 

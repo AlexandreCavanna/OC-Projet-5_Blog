@@ -17,7 +17,7 @@ use Twig\Loader\FilesystemLoader;
 $containerBuilder = new ContainerBuilder();
 
 $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
-$loader->load('services.yml');
+$loader->load('../src/Config/services.yml');
 
 $containerBuilder->register('context', Routing\RequestContext::class);
 

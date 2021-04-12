@@ -5,6 +5,7 @@ namespace App\Repository;
 
 
 use App\Entity\Post;
+use FireStorm\AbstractRepository;
 use PDO;
 use PDOStatement;
 

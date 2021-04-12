@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /** @var ContainerBuilder $container */
-$container = include '../src/Config/container.php';
+$container = include '../FireStorm/container.php';
 
 $container->setParameter('routes', include '../src/routes.php');
 

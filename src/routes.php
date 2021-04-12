@@ -26,4 +26,8 @@ $routes->add('post', new Route('/post/{id}', [
     'id' => $id = null
 ]));
 
+$routes->add('register', new Route('/register', [
+    '_controller' => [UserController::class, 'register'],
+]));
+
 return $routes;

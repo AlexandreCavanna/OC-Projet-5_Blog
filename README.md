@@ -1,6 +1,29 @@
 # OC-Projet-5_Blog
 Projet Blog Openclassrooms du parcours développeur d'applications PHP / SYMFONY.
 
+
+## Installation
+
+- Configurer la base de donnée dans [Config/database.php](Config/database.php).
+```php
+<?php
+
+return [
+    "dsn" => '',
+    "dbname" => '',
+    "user" => '',
+    "password" => ''
+];
+```
+- Configurer votre login gmail pour recevoir les mails du formulaire de contact dans [Config/mail.php](Config/mail.php).  
+```php
+<?php
+
+return [
+    'username' => '',
+    'password' => ''
+];
+```
 ## Créez votre premier blog en PHP
 
 Projet réalisé dans le cadre du parcours développeur d'applications PHP / SYMFONY effectué chez [Openclassrooms](https://openclassrooms.com/).

@@ -50,13 +50,12 @@ class Mail
      */
     public function sendMail(): string
     {
+        $confMail = require(__DIR__ . '/../../Config/mail.php');
         $mail = new PHPMailer();
         $mail->isSMTP();
-
-        $this->configureMail($mail);
-
-        $mail->setFrom('blog.acavanna@gmail.com', 'Contact form Blog');
-        $mail->addAddress('blog.acavanna@gmail.com', 'Alexandre CAVANNA');
+        $this->configureMail($mail, $confMail);
+        $mail->setFrom($confMail['username'], 'Contact form Blog');
+        $mail->addAddress($confMail['username'], 'Alexandre CAVANNA');
         $mail->addReplyTo($this->email, $this->name);
 
         $mail->Subject = 'Contact Form from my Blog';
@@ -76,15 +75,16 @@ class Mail
 
     /**
      * @param PHPMailer $mail
+     * @param array $confMail
      */
-    private function configureMail(PHPMailer $mail): void
+    private function configureMail(PHPMailer $mail, array $confMail): void
     {
         $mail->Host = 'smtp.gmail.com';
         $mail->Port = 587;
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->SMTPAuth = true;
-        $mail->Username = 'blog.acavanna@gmail.com';
-        $mail->Password = '6pWp6BkT4';
+        $mail->Username = $confMail['username'];
+        $mail->Password = $confMail['password'];
         $mail->CharSet = PHPMailer::CHARSET_UTF8;
         $this->setEmail(filter_input(INPUT_POST, 'email'));
         $this->setName(filter_input(INPUT_POST, 'name'));

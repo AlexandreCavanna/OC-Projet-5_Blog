@@ -10,7 +10,14 @@ abstract class AbstractRepository
 
     public function getDb(): \PDO
     {
-        self::$db = new \PDO('mysql:host=127.0.0.1;dbname=blog;', 'root', '');
+        $confDb = require(__DIR__ . '/../Config/database.php');
+
+        self::$db = new \PDO(
+            sprintf("%s%s", $confDb['dsn'], $confDb['dbname']),
+            $confDb['user'],
+            $confDb['password']
+        );
+
         self::$db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_WARNING);
 
         return self::$db;

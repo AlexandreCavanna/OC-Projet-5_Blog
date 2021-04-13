@@ -23,11 +23,39 @@ $routes->add('posts', new Route('/posts', [
 
 $routes->add('post', new Route('/post/{id}', [
     '_controller' => [PostController::class, 'showPost'],
-    'id' => $id = null
+    'id' => null
 ]));
 
-$routes->add('register', new Route('/register', [
-    '_controller' => [UserController::class, 'register'],
+$routes->add('register', new Route(
+    '/register',
+    ['_controller' => [UserController::class, 'register']],
+    [],
+    [],
+    null,
+    [],
+    'POST'
+));
+
+$routes->add('show_register', new Route('/register', [
+    '_controller' => [UserController::class, 'showRegister'],
+]));
+
+$routes->add('login', new Route('/login', [
+    '_controller' => [UserController::class, 'login']],
+    [],
+    [],
+    null,
+    [],
+    'POST'
+));
+
+$routes->add('show_login', new Route('/login', [
+    '_controller' => [UserController::class, 'showLogin'],
+]));
+
+
+$routes->add('logout', new Route('/logout', [
+    '_controller' => [UserController::class, 'logout'],
 ]));
 
 return $routes;

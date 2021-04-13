@@ -2,6 +2,16 @@
 
 {% block body %}
     <div class="container">
+            {% for flash in flashs %}
+                <div class="row">
+                    <div class="col">
+                        <div class="alert alert-dismissible alert-success mb-0">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <div><strong>{{ flash }}</strong></div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         <div class="row py-4">
             <div class="col-lg-4 col-md-12 text-center mb-4" id="picture">
                 <img src="/img/alexandre-cavanna.jpg" alt="Alexandre CAVANNA" class="rounded img-fluid">
@@ -44,24 +54,20 @@
             <h2 class="text-center" id="contact">Contact</h2>
             <div class="form-group">
                 <label for="exampleInputName1">Nom / Prénom</label>
-                <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp"
-                       placeholder="Entrez votre nom et prénom">
+                <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" placeholder="Entrez votre nom et prénom" required>
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Adresse email</label>
-                <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                       placeholder="Entrez votre email">
+                <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre email" required>
                 <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre e-mail avec une
                     autre personne .</small>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Message</label>
-                <textarea type="text" name="message" rows="5" class="form-control" id="exampleInputPassword1" placeholder="Votre message"></textarea>
+                <textarea type="text" name="message" rows="5" class="form-control" id="exampleInputPassword1" placeholder="Votre message" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary mb-4">Envoyer</button>
         </form>
-        <p class="text-center text-danger font-weight-bold">{{ session.email_error }}</p>
-        <p class="text-center text-success font-weight-bold">{{ session.email_success }}</p>
     </div>
 
 {% endblock %}

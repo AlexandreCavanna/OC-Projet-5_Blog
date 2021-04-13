@@ -14,36 +14,17 @@
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            {% if app.user %}
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link py-0 dropdown-toggle" data-toggle="dropdown" id="accountDropdownLink">
-                        {% if app.user.picture is null %}
-                        {{app.user.fullName}}
-                        {% else %}
-
-                        <img src="{{ app.user.picture }}" class="avatar avatar-mini"
-                             alt="Avatar de {{app.user.fullName}}"> {{app.user.fullName}}
-                    </a>
-                    {% endif %}
-
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu--animate" aria-labelledby="accountDropdownLink">
-
-                            <a href="" class="dropdown-item">Créer une offre</a>
-                            <div class="dropdown-divider"></div>
-
-                        <a href="" class="dropdown-item">Mon compte</a>
-                        <a href="" class="dropdown-item">Modifier mon profil</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="" class="dropdown-item">Déconnexion</a>
-                    </div>
-                </li>
-            {% else %}
+            {% if session._sf2_attributes.email%}
                 <li class="nav-item">
-                    <a href="/register" class="nav-link">Inscription &ensp;<i class="fas fa-sign-in-alt"></i></a>
+                    <a href="/logout" class="nav-link">Déconnexion &ensp;<i class="fas fa-sign-out-alt"></i></a>
                 </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link">Connexion &ensp;<i class="fa fa-user"></i></a>
-                </li>
+            {% else%}
+            <li class="nav-item">
+                <a href="/register" class="nav-link">Inscription &ensp;<i class="fas fa-sign-in-alt"></i></a>
+            </li>
+            <li class="nav-item">
+                <a href="/login" class="nav-link">Connexion &ensp;<i class="fa fa-user"></i></a>
+            </li>
             {% endif %}
         </ul>
     </div>

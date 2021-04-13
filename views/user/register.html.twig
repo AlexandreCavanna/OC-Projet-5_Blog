@@ -1,35 +1,62 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container flex-fill">
-    <h1>Inscription</h1>
-    <form class="needs-validation" action="/register" method="post">
+    <div class="container flex-fill">
+        {% if flashs.error or flashs.success %}
         <div class="row">
-            <div class="col form-group form">
-                <label for="InputEmail" class="form-label">Adresse email</label>
-                <input type="email" name="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" value="example@gmail.com" required>
-                <div class="valid-feedback">
-                    Looks good!
+            <div class="col">
+                <div class="alert alert-dismissible alert-{% if flashs.error %}danger{% elseif flashs.success %}success{% endif %} mb-0">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <span><strong><i
+                                    class="fas fa-exclamation-triangle"></i>&ensp;{{ flashs.error ? flashs.error[0] : flashs.success[0] }}</strong></span>
                 </div>
-                <div class="invalid-feedback">
-                    Please provide a valid city.
-                </div>
-                <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre e-mail avec une autre personne.</small>
-            </div>
-            <div class="col form-group">
-                <label for="InputPassword" class="form-label">Mot de passe</label>
-                <input type="password" name="password" class="form-control" id="InputPassword" required>
             </div>
         </div>
-        <div class="form-group">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="invalidCheck" required>
-                <label class="form-check-label" for="invalidCheck">
-                    En utilisant ce formulaire, vous acceptez le stockage et le traitement de vos données par ce site Web.
-                </label>
+        {% endif %}
+        <h1>Inscription</h1>
+        <form class="needs-validation" action="/register" method="POST">
+            <div class="row">
+                <div class="col form-group form">
+                    <label for="InputEmail" class="form-label">Adresse email</label>
+                    <input type="email" name="email"
+                           class="form-control {% if flashs.success %}is-valid{% elseif flashs.error %}is-invalid{% endif %}"
+                           id="InputEmail" aria-describedby="emailHelp" required>
+                    <div class="valid-feedback">
+                        Email valide !
+                    </div>
+                    <div class="invalid-feedback">
+                        Email invalide !
+                    </div>
+                    <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre e-mail avec une
+                        autre personne.</small>
+                </div>
+                <div class="col form-group">
+                    <label for="InputPassword" class="form-label">Mot de passe</label>
+                    <input type="password" name="password" class="form-control" id="InputPassword" required>
+                    <div class="invalid-feedback">
+                        Vous devez entrer un mot de passe valide.
+                    </div>
+                    <div class="valid-feedback">
+                        Mot de passe valide !
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="invalidCheck" required>
+                    <label class="form-check-label" for="invalidCheck">
+                        En utilisant ce formulaire, vous acceptez le stockage et le traitement de vos données par ce
+                        site Web.
+                    </label>
+                    <div class="invalid-feedback">
+                        Vous devez nous donner votre consentement afin de traiter vos données.
+                    </div>
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary">Inscription</button>
-    </form>
-</div>
+        </form>
+    </div>
+{% endblock %}
+{% block javascripts %}
+
 {% endblock %}

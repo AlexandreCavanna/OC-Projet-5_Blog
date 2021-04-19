@@ -1,3 +1,38 @@
+## [1.2.0](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/compare/v1.1.0...v1.2.0) (2021-04-19)
+
+
+### :bug: Bug Fixes
+
+* **readme:** fix codacy badge not display ([0b31982](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/0b31982e304bacf2595de2958bd2690dcf7e7245))
+
+
+### :white_check_mark: Setup
+
+* **bootstrap:** add js ([fb7a95a](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/fb7a95a7661e9dca73c9f4b03be9456739fa5513))
+
+
+### :repeat: CI
+
+* **code quality:** remove lint workflow ([658820e](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/658820ea25b7422d21cef2f7d31257d50b826b41))
+* **github action:** add linter php cs-fixer ([0c56ffa](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/0c56ffae0b516692afea788834ed520825e22c20))
+
+
+### :memo: Documentation
+
+* **readme:** add getting started section ([e0594d2](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/e0594d2183972408777d79b35f9ca035b600c0ba))
+
+
+### :sparkles: Features
+
+* **blog:** add posts page - add post page - home page => contact form send mail ([7cf60fd](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/7cf60fdc54af5b4515bd7416eba6bae49ce37764))
+* **configuration:** allow setup database credentials ([2eab850](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/2eab850a8cce7d43ab80455b7398e8edb943eb91))
+* **configuration:** allow setup gmail credentials ([cf86825](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/cf868255ffe3fd9da42ec500402823bc4d2d0cf1))
+* **error:** add page error 500 and 404 ([76b599d](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/76b599d80f0052a8a21f6b950bdebd6a4a4b164a))
+* **firestorm:** create my own php framework firestorm ([a4b72d8](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/a4b72d8750ad0fc4a18aabfa46dda0c8e8bbefb8))
+* **page:** add homepage ([d3eb157](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/d3eb1579fb8d957ead43fc9c9af08c13aaaf3ea9))
+* **page:** add user login / logout ([1f04586](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/1f045868fa0c9d2d95e4ca1aadd109d66f22aeaf))
+* **page:** add user register ([7688de9](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/7688de97c93e0dbe2dd13c85a3771c3b5ded28aa))
+
 ## [1.1.0](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/compare/v1.0.0...v1.1.0) (2021-03-21)
 
 

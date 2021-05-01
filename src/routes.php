@@ -1,5 +1,6 @@
 <?php
 
+use App\Controller\AdminController;
 use App\Controller\HomeController;
 use App\Controller\PostController;
 use App\Controller\UserController;
@@ -38,9 +39,16 @@ $routes->add('register', new Route(
 
 $routes->add('show_register', new Route('/register', [
     '_controller' => [UserController::class, 'showRegister'],
+    [],
+    [],
+    null,
+    [],
+    'GET'
 ]));
 
-$routes->add('login', new Route('/login', [
+$routes->add('login', new Route(
+    '/login',
+    [
     '_controller' => [UserController::class, 'login']],
     [],
     [],
@@ -51,11 +59,62 @@ $routes->add('login', new Route('/login', [
 
 $routes->add('show_login', new Route('/login', [
     '_controller' => [UserController::class, 'showLogin'],
+    [],
+    [],
+    null,
+    [],
+    'GET'
 ]));
 
 
 $routes->add('logout', new Route('/logout', [
     '_controller' => [UserController::class, 'logout'],
 ]));
+
+$routes->add('index', new Route('/admin', [
+    '_controller' => [AdminController::class, 'index'],
+]));
+
+$routes->add('show_post_comments', new Route('/admin/post/{id}/comments', [
+    '_controller' => [AdminController::class, 'showCommentsByPost'],
+    'id' => null
+    ],
+    [],
+    [],
+    null,
+    [],
+    'GET'
+));
+
+$routes->add('approve_post_comment', new Route('/admin/post/{idPost}/comment/{idComment}/approve', [
+    '_controller' => [AdminController::class, 'approveComment'],
+    'idPost' => null,
+    'idComment' => null
+    ],
+));
+
+$routes->add('edit_post', new Route('/admin/post/{id}/edit', [
+    '_controller' => [AdminController::class, 'editPost'],
+    'id' => null,
+],
+));
+
+$routes->add('delete_post', new Route('/admin/post/{id}/delete', [
+    '_controller' => [AdminController::class, 'deletePost'],
+    'id' => null,
+],
+));
+
+$routes->add('delete_comment', new Route('/admin/comment/{id}/delete', [
+    '_controller' => [AdminController::class, 'deleteComment'],
+    'id' => null,
+],
+));
+
+$routes->add('report_comment', new Route('comment/{id}/report', [
+    '_controller' => [UserController::class, 'reportComment'],
+    'id' => null,
+],
+));
 
 return $routes;

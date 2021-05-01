@@ -1,0 +1,211 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Espace d'administration{% endblock %}
+
+{% block body %}
+    {% set countReview = 0 %}
+    {% set countReported = 0 %}
+
+        {% for comment in comments %}
+            {% if comment.status == 'Signalé' %}
+                {% set countReported = countReported + 1 %}
+            {% endif %}
+            {% if comment.status == 'Besoin d\'un examen'%}
+                {% set countReview = countReview + 1 %}
+            {% endif %}
+
+        {% endfor %}
+
+    <div class="container-fluid flex-fill">
+        <div class="row">
+            <div class="col-12 col-sm-4 col-md-4 col-lg-2">
+                <div class="nav flex-column nav-pills text-center" id="v-pills-tab" role="tablist"
+                     aria-orientation="vertical">
+                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
+                       aria-controls="v-pills-home" aria-selected="true">Gérer les Posts</a>
+                    <a class="nav-link" id="v-pills-commentReported-tab" data-toggle="pill" href="#v-pills-commentReported" role="tab"
+                       aria-controls="v-pills-commentReported" aria-selected="false">Commentaires signalés {% if countReported != 0 %}<span class="badge badge-primary">{{ countReported }}</span>{% endif %}</a>
+                    <a class="nav-link" id="v-pills-commentPendingReview-tab" data-toggle="pill" href="#v-pills-commentPendingReview" role="tab"
+                       aria-controls="v-pills-commentReported" aria-selected="false">Commentaires besoin validation {% if countReview != 0 %}<span class="badge badge-primary">{{ countReview }}</span>{% endif %}</a>
+                </div>
+            </div>
+            <div class="col-12 col-sm-8 col-md-8 col-lg-10">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                         aria-labelledby="v-pills-home-tab">
+                        <div class="row">
+                            {% for post in posts %}
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="card mb-4">
+                                        {# <img class="card-img-top" src="" alt="Card image cap"> #}
+                                        <div class="card-body">
+                                            <h2 class="card-title">{{ post.title }}</h2>
+                                            <p class="card-text">{{ post.chapo|raw }}</p>
+                                            <a href="/post/{{ post.id }}" class="btn btn-primary">Voir</a>
+                                            <a href="admin/post/{{ post.id }}/edit" class="btn btn-success">Editer</a>
+                                            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModalPost{{ post.id }}">Supprimer</button>
+                                            <div class="modal fade" id="deleteModalPost{{ post.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteModalLabel">Suppression du Post</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Êtes-vous sûr de vouloir supprimer ce post ?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                            <a href="admin/post/{{ post.id }}/delete" class="btn btn-danger">Supprimer</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            {% set needReview = 0 %}
+                                            {% for comment in comments %}
+                                                {% if comment.post_id == post.id and comment.status != 'Approuvé'%}
+                                                    {% set needReview = needReview + 1 %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            <a href="/admin/post/{{ post.id }}/comments" class="btn btn-success">Gérer les commentaires du post
+                                                {% if needReview != 0 %}
+                                                <span class="badge badge-primary">{{ needReview }}</span>
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                        <div class="card-footer text-muted">
+                        <span class="float-right">
+                            {{ post.modify_At is empty
+                            ? 'Publié le ' ~ post.created_At|date("d/m/Y à H\\hi")
+                            : 'Modifié le ' ~ post.modify_At|date("d/m/Y à H\\hi") }}
+                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-commentReported" role="tabpanel"
+                         aria-labelledby="v-pills-commentReported-tab">
+                        <div class="row">
+                            {% set hasCommentReported = false %}
+                            {% for comment in comments %}
+                                {% if comment.status is same as 'Signalé' %}
+                                    {% set hasCommentReported = true %}
+                                    <div class="col-md-4">
+                                        <div class="card my-4">
+                                            <label class="card-header card-header-sm" for="commentForm">Commentaire
+                                                #{{ comment.id }}</label>
+                                            <div class="card-body card-body-sm">
+                                                {{ comment.content }}
+                                                <hr>
+                                                <p class="lead">Statut :
+                                                    <span class="badge badge-pill badge-danger">{{ comment.status }}</span>
+                                                </p>
+                                                <a class="btn btn-success"
+                                                   href="/admin/post/{{ comment.post_id }}/comment/{{ comment.id }}/approve">Approuver</a>
+                                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModalComment{{ comment.id }}">Supprimer</button>
+                                                <div class="modal fade" id="deleteModalComment{{ comment.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="deleteModalLabel">Suppression du commentaire</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Êtes-vous sûr de vouloir supprimer ce commentaire ?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                                <a href="/admin/comment/{{ comment.id }}/delete" class="btn btn-danger">Supprimer</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <p class="float-right">
+                                                    {{ comment.modify_At is empty
+                                                    ? 'Publié le ' ~ comment.created_At|date("d/m/Y à H\\hi")
+                                                    : 'Modifié le ' ~ comment.modify_At|date("d/m/Y à H\\hi")
+                                                    }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            {% if hasCommentReported == false %}
+                                <div class="col-11 text-center alert alert-warning">
+                                    <strong>Attention :</strong> Aucun commentaire(s), n'a été encore signalé(s).
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-commentPendingReview" role="tabpanel"
+                         aria-labelledby="v-pills-commentReported-tab">
+                        <div class="row">
+                            {% set hasCommentPendingReview = false %}
+                            {% for comment in comments %}
+                                {% if comment.status is same as 'Besoin d\'un examen' %}
+                                    {% set hasCommentPendingReview = true %}
+                                    <div class="col-md-4">
+                                        <div class="card my-4">
+                                            <label class="card-header card-header-sm" for="commentForm">Commentaire
+                                                #{{ comment.id }}</label>
+                                            <div class="card-body card-body-sm">
+                                                {{ comment.content }}
+                                                <hr>
+                                                <p class="lead">Statut :
+                                                    <span class="badge badge-pill badge-warning">{{ comment.status }}</span>
+                                                </p>
+                                                <a class="btn btn-success"
+                                                   href="/admin/post/{{ comment.post_id }}/comment/{{ comment.id }}/approve">Approuver</a>
+                                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModalComment{{ comment.id }}">Supprimer</button>
+                                                <div class="modal fade" id="deleteModalComment{{ comment.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="deleteModalLabel">Suppression du commentaire</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Êtes-vous sûr de vouloir supprimer ce commentaire ?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                                <a href="/admin/comment/{{ comment.id }}/delete" class="btn btn-danger">Supprimer</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <p class="float-right">
+                                                    {{ comment.modify_At is empty
+                                                    ? 'Publié le ' ~ comment.created_At|date("d/m/Y à H\\hi")
+                                                    : 'Modifié le ' ~ comment.modify_At|date("d/m/Y à H\\hi")
+                                                    }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            {% if hasCommentPendingReview == false %}
+                                <div class="col-11 text-center alert alert-warning">
+                                    <strong>Attention :</strong> Aucun commentaire(s), n'a besoin d'être examiné.
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

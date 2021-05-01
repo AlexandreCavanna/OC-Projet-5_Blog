@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition du post{% endblock %}
+
+{% block body %}
+    <div class="container flex-fill">
+        {% if flashs.error or flashs.success %}
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-dismissible alert-{% if flashs.error %}danger{% elseif flashs.success %}success{% endif %} mb-0">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <span><strong><i
+                                        class="fas fa-exclamation-triangle"></i>&ensp;{{ flashs.error ? flashs.error[0] : flashs.success[0] }}</strong></span>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <h1>Modifier le post #{{ post.id }}</h1>
+        <form class="needs-validation mb-4" action="edit" method="post">
+            <div class="row">
+                <div class="col-12 col-sm-6 form-group form">
+                    <label for="InputTitle" class="form-label">Titre</label>
+                    <input type="text" name="title"
+                           class="form-control {% if validFields.title %}is-valid{% elseif flashs.errorTitle %}is-invalid{% endif %}"
+                           id="InputTitle" aria-describedby="titleHelp"
+                           {% if validFields.title %}value="{{ validFields.title }}"{% endif %}>
+                    <div class="valid-feedback">
+                        Titre valide !
+                    </div>
+                    <div class="invalid-feedback">
+                        Champ "Titre" vide !
+                    </div>
+                </div>
+                <div class="col form-group">
+                    <label for="InputAuthor" class="form-label">Auteur</label>
+                    <input type="text" name="author"
+                           class="form-control {% if validFields.author %}is-valid{% elseif flashs.errorAuthor %}is-invalid{% endif %}"
+                           id="InputAuthor"
+                           {% if validFields.author %}value="{{ validFields.author }}"{% endif %}>
+                    <div class="valid-feedback">
+                        Auteur valide !
+                    </div>
+                    <div class="invalid-feedback">
+                        Champ "Auteur" vide !
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col form-group">
+                    <label for="InputChapo" class="form-label">Chapô</label>
+                    <textarea type="text" name="chapo"
+                              class="form-control {% if validFields.chapo %}is-valid{% elseif flashs.errorChapo or flashs.errorLengthChapo %}is-invalid{% endif %}"
+                              id="InputChapo"
+                              rows="2">{% if validFields.chapo %}value="{{ validFields.chapo }}"{% endif %}</textarea>
+                    <small id="chapoHelp" class="form-text text-muted">Le chapô ne doit pas faire plus de 255
+                        caractères.</small>
+                    <div class="valid-feedback">
+                        Chapô valide !
+                    </div>
+                    <div class="invalid-feedback">
+                        {% if flashs.errorLengthChapo[0] %}Le chapô fait plus de 255 caractères !{% else %}Champ "Chapô" vide !{% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col form-group">
+                    <label for="InputContent" class="form-label">Contenu</label>
+                    <textarea type="text" name="content"
+                              class="form-control {% if validFields.content %}is-valid{% elseif flashs.errorContent or flashs.errorLengthContent %}is-invalid{% endif %}"
+                              id="InputContent"
+                              rows="5">{% if validFields.content %}value="{{ validFields.content }}"{% endif %}</textarea>
+                    <small id="contentoHelp" class="form-text text-muted">Le contenu ne doit pas faire plus de 1600
+                        caractères.</small>
+                    <div class="valid-feedback">
+                        Contenu valide !
+                    </div>
+                    <div class="invalid-feedback">
+                        {% if flashs.errorLengthContent[0] %}Le contenu fait plus de 255 caractères !{% else %}Champ "Contenu" vide !{% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="text-md-left text-center">
+                <button type="submit" class="btn btn-primary">Editer</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

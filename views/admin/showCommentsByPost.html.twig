@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des commentaires{% endblock %}
+
+{% macro badge(status, comment) %}
+    <span class="badge badge-pill badge-{{ status|default('warning') }}">{{ comment.status }}</span>
+{% endmacro %}
+
+{% block body %}
+    <div class="container flex-fill">
+        <div class="row justify-content-center align-items-center">
+            {% for comment in comments %}
+                <div class="col-md-4">
+                    <div class="card my-4">
+                        <label class="card-header card-header-sm" for="commentForm">Commentaire
+                            #{{ comment.id }}</label>
+                        <div class="card-body card-body-sm">
+                            {{ comment.content }}
+                            <hr>
+                            <p class="lead">Statut :
+                                {% if comment.status is same as 'Approuvé' %}
+                                    {{ _self.badge('success',comment) }}
+                                {% elseif comment.status is same as 'Besoin d\'un examen' %}
+                                    {{ _self.badge(status, comment) }}
+                                {% else %}
+                                    {{ _self.badge('danger', comment) }}
+                                {% endif %}
+                            </p>
+                            <a class="btn btn-success"
+                               href="/admin/post/{{ comment.post_id }}/comment/{{ comment.id }}/approve">Approuver</a>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ comment.id }}">Supprimer</button>
+                            <div class="modal fade" id="deleteModal{{ comment.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel">Suppression du Commentaire</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Êtes-vous sûr de vouloir supprimer ce commentaire ?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                            <a href="/admin/comment/{{ comment.id }}/delete" class="btn btn-danger">Supprimer</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <p class="float-right">
+                            {{ comment.modify_At is empty
+                            ? 'Publié le ' ~ comment.created_At|date("d/m/Y à H\\hi")
+                            : 'Modifié le ' ~ comment.modify_At|date("d/m/Y à H\\hi")
+                            }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% if comments is empty %}
+                <div class="col-11 text-center alert alert-warning">
+                    <strong>Attention :</strong> Ce <a href="/post/{{ postId }}" class="alert-link">Post</a>, n'a pas encore de commentaire(s) publié(s).
+                </div>
+            {% endif %}
+        </div>
+        {% if comments is empty %}
+            <div class="row">
+                <div class="col text-center">
+                    <a href="/admin" class="btn btn-primary">Retour à l'administration</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,3 +1,10 @@
+### [1.3.1](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/compare/v1.3.0...v1.3.1) (2021-05-01)
+
+
+### :bug: Bug Fixes
+
+* **code quality:** split templates ([752116d](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/752116d3a7f33c8cac7781e088d6326b84c18edf))
+
 ## [1.3.0](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/compare/v1.2.0...v1.3.0) (2021-05-01)
 
 

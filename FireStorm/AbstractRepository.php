@@ -13,7 +13,7 @@ abstract class AbstractRepository
         $confDb = require(__DIR__ . '/../Config/database.php');
 
         self::$db = new \PDO(
-            sprintf("%s%s", $confDb['dsn'], $confDb['dbname']),
+            sprintf("%s%s%s", $confDb['dsn'], $confDb['dbname'], $confDb['charset']),
             $confDb['user'],
             $confDb['password']
         );

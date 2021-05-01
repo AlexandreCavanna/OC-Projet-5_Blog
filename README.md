@@ -1,6 +1,14 @@
 # OC-Projet-5_Blog
 Projet Blog Openclassrooms du parcours développeur d'applications PHP / SYMFONY.
 
+## Récupération du projet
+
+
+Exécuter la commande suivante pour récupérer le projet :
+
+    git clone https://github.com/AlexandreCavanna/OC-Projet-5_Blog.git
+
+Le dossier sera automatiquement cloné dans votre répertoire.
 
 ## Installation
 
@@ -11,6 +19,7 @@ Projet Blog Openclassrooms du parcours développeur d'applications PHP / SYMFONY
 return [
     "dsn" => '',
     "dbname" => '',
+    "charset" => '',
     "user" => '',
     "password" => ''
 ];

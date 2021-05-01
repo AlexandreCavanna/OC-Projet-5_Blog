@@ -25,7 +25,8 @@
         "symfony/dependency-injection": "^5.2",
         "symfony/yaml": "^5.2",
         "symfony/config": "^5.2",
-        "symfony/framework-bundle": "^5.2"
+        "symfony/framework-bundle": "^5.2",
+        "ext-mysqli": "*"
     },
     "require-dev": {
         "symfony/var-dumper": "^5.2"

@@ -7,8 +7,15 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+/**
+ * Class HomeController
+ * @package App\Controller
+ */
 class HomeController extends AbstractController
 {
+    /**
+     * @var \Symfony\Component\HttpFoundation\Session\Session
+     */
     private Session $session;
 
     /**
@@ -19,6 +26,10 @@ class HomeController extends AbstractController
         $this->session = new Session();
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
     public function index(): Response
     {
         $session = new Session();
@@ -29,6 +40,10 @@ class HomeController extends AbstractController
             ]));
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
     public function mailer(): RedirectResponse
     {
         $mail = new Mail();

@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block title %}Liste des posts{% endblock %}
 
+{% block body %}
     <div class="container flex-fill">
         <div class="row">
                 {% for post in posts %}
@@ -10,14 +11,14 @@
 {#                    <img class="card-img-top" src="" alt="Card image cap">#}
                     <div class="card-body">
                         <h2 class="card-title">{{ post.title }}</h2>
-                        <p class="card-text">{{ post.chapo }}</p>
+                        <p class="card-text" style="font-style: italic;">{{ post.chapo|raw }}</p>
                         <a href="/post/{{ post.id }}" class="btn btn-primary">Lire la suite &rarr;</a>
                     </div>
                     <div class="card-footer text-muted">
                         <span class="float-right">
                             {{ post.modify_At is empty
-                                ? 'Publié le ' ~ post.created_At|date("m/d/Y à H\\hi")
-                                : 'Modifié le ' ~ post.modify_At|date("m/d/Y à H\\hi")
+                                ? 'Publié le ' ~ post.created_At|date("d/m/Y à H\\hi")
+                                : 'Modifié le ' ~ post.modify_At|date("d/m/Y à H\\hi")
                             }}
                         </span>
                     </div>

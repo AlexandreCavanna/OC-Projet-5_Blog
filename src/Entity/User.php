@@ -8,7 +8,8 @@ class User
     private $id;
     private $email;
     private $password;
-
+    private $role;
+    
     /**
      * @param array $data
      */
@@ -22,12 +23,10 @@ class User
      */
     private function hydrate(array $data)
     {
-        foreach($data as $key => $value)
-        {
+        foreach ($data as $key => $value) {
             $method = 'set'.ucfirst($key);
 
-            if(method_exists($this, $method))
-            {
+            if (method_exists($this, $method)) {
                 $this->$method($value);
             }
         }
@@ -79,5 +78,21 @@ class User
     public function setPassword($password): void
     {
         $this->password = $password;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role): void
+    {
+        $this->role = $role;
     }
 }

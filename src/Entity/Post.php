@@ -3,8 +3,6 @@
 
 namespace App\Entity;
 
-
-
 class Post
 {
     private int $id;
@@ -12,8 +10,8 @@ class Post
     private string $chapo;
     private string $author;
     private string $content;
-    private $createdAt;
-    private $modifyAt;
+    private string $created_At;
+    private ?string $modify_At;
 
     /**
      * @param array $data
@@ -28,12 +26,10 @@ class Post
      */
     private function hydrate(array $data)
     {
-        foreach($data as $key => $value)
-        {
+        foreach ($data as $key => $value) {
             $method = 'set'.ucfirst($key);
 
-            if(method_exists($this, $method))
-            {
+            if (method_exists($this, $method)) {
                 $this->$method($value);
             }
         }
@@ -120,34 +116,35 @@ class Post
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getCreatedAt()
+    public function getCreated_At(): string
     {
-        return $this->createdAt;
+        return $this->created_At;
     }
 
     /**
-     * @param $createdAt
+     * @param string $created_At
      */
-    public function setCreatedAt($createdAt): void
+    public function setCreated_At(string $created_At): void
     {
-        $this->createdAt = $createdAt;
+        $this->created_At = $created_At;
+    }
+
+
+    /**
+     * @return string|null
+     */
+    public function getModify_At(): ?string
+    {
+        return $this->modify_At;
     }
 
     /**
-     * @return mixed
+     * @param string|null $modify_At
      */
-    public function getModifyAt()
+    public function setModify_At(?string $modify_At): void
     {
-        return $this->modifyAt;
-    }
-
-    /**
-     * @param mixed $modifyAt
-     */
-    public function setModifyAt($modifyAt): void
-    {
-        $this->modifyAt = $modifyAt;
+        $this->modify_At = $modify_At;
     }
 }

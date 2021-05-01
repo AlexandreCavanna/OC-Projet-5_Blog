@@ -1,20 +1,24 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Connexion{% endblock %}
+
 {% block body %}
 <div class="container flex-fill">
     <h1>Connexion</h1>
     <form action="/login" method="post">
         <div class="row">
-            <div class="col form-group form">
+            <div class="col-12 col-md-6 form-group form">
                 <label for="InputEmail" class="form-label">Adresse email</label>
-                <input type="email" name="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" value="example@gmail.com" required>
+                <input type="email" name="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" required>
             </div>
-            <div class="col form-group">
+            <div class="col-12 col-md-6 form-group">
                 <label for="InputPassword" class="form-label">Mot de passe</label>
                 <input type="password" name="password" class="form-control" id="InputPassword" required>
             </div>
         </div>
+        <div class="text-md-left text-center">
         <button type="submit" class="btn btn-primary">Se connecter</button>
+        </div>
     </form>
 </div>
 {% endblock %}

@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
 use App\Service\Authentication;
 use FireStorm\AbstractController;
@@ -11,15 +12,37 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+/**
+ * Class UserController
+ * @package App\Controller
+ */
 class UserController extends AbstractController
 {
+    /**
+     * @var \Symfony\Component\HttpFoundation\Session\Session
+     */
     private Session $session;
+    /**
+     * @var \App\Repository\CommentRepository
+     */
+    private CommentRepository $commentRepository;
+    /**
+     * @var \App\Repository\UserRepository
+     */
+    private UserRepository $userRepository;
+    /**
+     * @var \App\Service\Authentication
+     */
+    private Authentication $authentication;
 
     /**
      * UserController constructor.
      */
     public function __construct()
     {
+        $this->userRepository = new UserRepository();
+        $this->commentRepository = new CommentRepository();
+        $this->authentication = new Authentication();
         $this->session = new Session();
     }
 
@@ -51,10 +74,13 @@ class UserController extends AbstractController
         ]));
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
     public function showRegister(): Response
     {
-        if ($this->session->get('email') !== null)
-        {
+        if ($this->session->get('email') !== null) {
             return new RedirectResponse('/');
         }
         return new Response($this->render('user/register.html.twig'));
@@ -69,15 +95,12 @@ class UserController extends AbstractController
         $email = $request->request->get('email');
         $password = $request->request->get('password');
 
-        $userRepository = new UserRepository();
-        $authentication = new Authentication();
-
         if (
             $email !== null &&
             $password !== null &&
-            password_verify($password, $userRepository->findEmail($email)->getPassword())
+            password_verify($password, $this->userRepository->findEmail($email)->getPassword())
         ) {
-            $authentication->setSession($userRepository->findEmail($email));
+            $this->authentication->setSession($this->userRepository->findEmail($email));
             $this->session->getFlashBag()->add('success', 'Vous êtes maintenant connecté !');
         }
 
@@ -90,8 +113,7 @@ class UserController extends AbstractController
      */
     public function showLogin(): Response
     {
-        if ($this->session->get('email') !== null)
-        {
+        if ($this->session->get('email') !== null) {
             return new RedirectResponse('/');
         }
         return new Response($this->render('user/login.html.twig'));
@@ -105,5 +127,18 @@ class UserController extends AbstractController
         $this->session->clear();
         $this->session->getFlashBag()->add('success', 'Vous avez été déconnecté avec succès !');
         return new RedirectResponse('/');
+    }
+
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function reportComment($id): RedirectResponse
+    {
+        $commentRepository = $this->commentRepository;
+        $commentRepository->reportComment($id);
+        $comment = $commentRepository->getComment($id);
+
+        return new RedirectResponse('/post/'. $comment->getPost_id());
     }
 }

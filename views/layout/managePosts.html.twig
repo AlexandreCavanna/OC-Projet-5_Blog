@@ -1,0 +1,56 @@
+<div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+     aria-labelledby="v-pills-home-tab">
+    <div class="row">
+        {% for post in posts %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ post.title }}</h2>
+                        <p class="card-text">{{ post.chapo|raw }}</p>
+                        <a href="/post/{{ post.id }}" class="btn btn-primary">Voir</a>
+                        <a href="admin/post/{{ post.id }}/edit" class="btn btn-success">Editer</a>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModalPost{{ post.id }}">Supprimer</button>
+                        <div class="modal fade" id="deleteModalPost{{ post.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Suppression du Post</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Êtes-vous sûr de vouloir supprimer ce post ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                        <a href="admin/post/{{ post.id }}/delete" class="btn btn-danger">Supprimer</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        {% set needReview = 0 %}
+                        {% for comment in comments %}
+                            {% if comment.post_id == post.id and comment.status != 'Approuvé'%}
+                                {% set needReview = needReview + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                        <a href="/admin/post/{{ post.id }}/comments" class="btn btn-success">Gérer les commentaires du post
+                            {% if needReview != 0 %}
+                                <span class="badge badge-primary">{{ needReview }}</span>
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <span class="float-right">
+                            {{ post.modify_At is empty
+                            ? 'Publié le ' ~ post.created_At|date("d/m/Y à H\\hi")
+                            : 'Modifié le ' ~ post.modify_At|date("d/m/Y à H\\hi") }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -6,11 +6,11 @@ namespace App\Entity;
 class Comment
 {
     private int $id;
-    private int $post_id;
+    private int $postId;
     private string $status;
     private string $content;
-    private string $created_at;
-    private ?string $modify_at='';
+    private string $createdAt;
+    private ?string $modifyAt='';
 
     /**
      * @param array $data
@@ -85,18 +85,18 @@ class Comment
     /**
      * @return int
      */
-    public function getPost_id(): int
+    public function getPostId(): int
     {
-        return $this->post_id;
+        return $this->postId;
     }
 
     /**
-     * @param int $post_id
+     * @param int $postId
      * @return \App\Entity\Comment
      */
-    public function setPost_id(int $post_id): Comment
+    public function setPostId(int $postId): Comment
     {
-        $this->post_id = $post_id;
+        $this->postId = $postId;
 
         return $this;
     }
@@ -104,32 +104,32 @@ class Comment
     /**
      * @return string
      */
-    public function getCreated_At(): string
+    public function getCreatedAt(): string
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param string $created_at
+     * @param string $createdAt
      */
-    public function setCreated_At(string $created_at): void
+    public function setCreatedAt(string $createdAt): void
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
     }
 
     /**
      * @return string|null
      */
-    public function getModify_At(): ?string
+    public function getModifyAt(): ?string
     {
-        return $this->modify_at;
+        return $this->modifyAt;
     }
 
     /**
-     * @param string|null $modify_at
+     * @param string|null $modifyAt
      */
-    public function setModify_At(?string $modify_at): void
+    public function setModifyAt(?string $modifyAt): void
     {
-        $this->modify_at = $modify_at;
+        $this->modifyAt = $modifyAt;
     }
 }

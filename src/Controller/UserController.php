@@ -139,6 +139,6 @@ class UserController extends AbstractController
         $commentRepository->reportComment($id);
         $comment = $commentRepository->getComment($id);
 
-        return new RedirectResponse('/post/'. $comment->getPost_id());
+        return new RedirectResponse('/post/'. $comment->getPostId());
     }
 }

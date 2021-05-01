@@ -48,7 +48,8 @@ class PostRepository extends AbstractRepository
     public function updatePost($id, $title, $chapo, $author, $content): bool
     {
         $db = $this->getDb();
-        $query =  $db->prepare('UPDATE post SET title = :title, chapo = :chapo, author = :author, content = :content, modify_at = NOW() WHERE id =' . $id);
+        $query =  $db->prepare('UPDATE post SET title = :title, chapo = :chapo, author = :author, content = :content, modify_at = NOW() WHERE id = :id');
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
         return $query->execute([
             'title' => $title,
             'chapo' => $chapo,

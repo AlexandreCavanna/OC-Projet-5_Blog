@@ -11,6 +11,7 @@ class CommentRepository extends AbstractRepository
 {
     /**
      * @param string $content
+     * @param int $postId
      */
     public function createComment(string $content, int $postId)
     {
@@ -93,7 +94,8 @@ class CommentRepository extends AbstractRepository
     public function deleteComment($id)
     {
         $db = $this->getDb();
-        $query =  $db->prepare("DELETE FROM comment WHERE id =". $id);
+        $query =  $db->prepare("DELETE FROM comment WHERE id = :id");
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
         $query->execute();
     }
 

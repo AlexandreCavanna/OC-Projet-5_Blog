@@ -186,7 +186,7 @@ class AdminController extends AbstractController
         }
 
         $comment = $this->commentRepository->getComment($id);
-        $idPost = $comment->getPost_id();
+        $idPost = $comment->getPostId();
         $this->commentRepository->deleteComment($id);
 
 

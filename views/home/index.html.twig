@@ -7,7 +7,8 @@
                 <div class="col">
                     <div class="alert alert-dismissible alert-{% if flashs.error %}danger{% elseif flashs.success %}success{% endif %} mb-0">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <span><strong> {% if flashs.error %}<i class="fas fa-exclamation-triangle"></i>{% endif %}&ensp;{{ flashs.error ? flashs.error[0] : flashs.success[0] }}</strong></span>
+                        <span><strong> {% if flashs.error %}<i
+                                    class="fas fa-exclamation-triangle"></i>{% endif %}&ensp;{{ flashs.error ? flashs.error[0] : flashs.success[0] }}</strong></span>
                     </div>
                 </div>
             </div>
@@ -17,7 +18,8 @@
                 <img src="/img/alexandre-cavanna.jpg" alt="Alexandre CAVANNA" class="rounded img-fluid">
             </div>
             <div class="col-lg-8 col-md-12">
-                <h3 class="text-center"><span class="font-weight-bold text-primary">Alexandre CAVANNA</span>, <span class="text-secondary">Développeur Web</span>.</h3>
+                <h3 class="text-center"><span class="font-weight-bold text-primary">Alexandre CAVANNA</span>, <span
+                            class="text-secondary">Développeur Web</span>.</h3>
 
                 <ul class="list-unstyled d-flex justify-content-center row small text-muted">
                     <li class="mr-2">
@@ -31,10 +33,16 @@
                 </ul>
 
                 <p class="text-justify">
-                    <span class="">Curieux</span> et <span class="font-weight-bold">passionné</span> par l'informatique et plus particulièrement par le <span class="font-weight-bold">développement Web</span>, j'ai pu acquérir de nombreuses compétences professionnelles en <span class="font-weight-bold">autodidacte</span> et en suivant le parcours de <span class="font-weight-bold">Développeur Web Junior (niveau III)</span> chez OpenClassrooms ainsi que dans mon <span class="font-weight-bold">BTS SIO</span>.
+                    <span class="">Curieux</span> et <span class="font-weight-bold">passionné</span> par l'informatique
+                    et plus particulièrement par le <span class="font-weight-bold">développement Web</span>, j'ai pu
+                    acquérir de nombreuses compétences professionnelles en <span
+                            class="font-weight-bold">autodidacte</span> et en suivant le parcours de <span
+                            class="font-weight-bold">Développeur Web Junior (niveau III)</span> chez OpenClassrooms
+                    ainsi que dans mon <span class="font-weight-bold">BTS SIO</span>.
                 </p>
                 <p class="text-justify">
-                    N'hésitez pas à me <a href="#contact" class="text-secondary font-weight-bold">contacter</a> pour plus de <span class="font-weight-bold">renseignements</span>.
+                    N'hésitez pas à me <a href="#contact" class="text-secondary font-weight-bold">contacter</a> pour
+                    plus de <span class="font-weight-bold">renseignements</span>.
                 </p>
                 <div class="col text-center">
                     <a href="/cv/alexandrecavanna.pdf" class="btn btn-primary">Voir CV</a>
@@ -43,8 +51,10 @@
                 <hr>
 
                 <div class="text-center">
-                    <a href="https://www.linkedin.com/in/alexandre-cavanna-194448125/" target="_blank" title="Mon Linkedin"><i class="fab fa-linkedin text-primary"></i></a>
-                    <a href="https://github.com/AlexandreCAVANNA" target="_blank" title="Mon Github"><i class="fab fa-github-square text-primary"></i></a>
+                    <a href="https://www.linkedin.com/in/alexandre-cavanna-194448125/" target="_blank"
+                       title="Mon Linkedin"><i class="fab fa-linkedin text-primary"></i></a>
+                    <a href="https://github.com/AlexandreCAVANNA" target="_blank" title="Mon Github"><i
+                                class="fab fa-github-square text-primary"></i></a>
                 </div>
             </div>
         </div>
@@ -54,7 +64,10 @@
             <h2 class="text-center" id="contact">Contact</h2>
             <div class="form-group">
                 <label for="exampleInputName1">Nom / Prénom</label>
-                <input type="text" name="name" class="form-control {% if validFields.name %}is-valid{% elseif flashs.errorName %}is-invalid{% endif %}" id="exampleInputEmail1" aria-describedby="nameHelp" placeholder="Entrez votre nom et prénom" {% if validFields.name %}value="{{ validFields.name }}"{% endif %}>
+                <input type="text" name="name"
+                       class="form-control {% if validFields.name %}is-valid{% elseif flashs.errorName %}is-invalid{% endif %}"
+                       id="exampleInputEmail1" aria-describedby="nameHelp" placeholder="Entrez votre nom et prénom"
+                       {% if validFields.name %}value="{{ validFields.name }}"{% endif %}>
                 <div class="valid-feedback">
                     Nom / Prénom valide !
                 </div>
@@ -64,7 +77,10 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Adresse email</label>
-                <input type="email" name="email" class="form-control {% if validFields.email %}is-valid{% elseif flashs.errorEmail %}is-invalid{% endif %}" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre email" {% if validFields.email %}value="{{ validFields.email }}"{% endif %}>
+                <input type="email" name="email"
+                       class="form-control {% if validFields.email %}is-valid{% elseif flashs.errorEmail %}is-invalid{% endif %}"
+                       id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre email"
+                       {% if validFields.email %}value="{{ validFields.email }}"{% endif %}>
                 <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre e-mail avec une
                     autre personne .</small>
                 <div class="valid-feedback">
@@ -76,7 +92,10 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Message</label>
-                <textarea type="text" name="message" rows="5" class="form-control {% if validFields.message %}is-valid{% elseif flashs.errorMessage %}is-invalid{% endif %}" id="exampleInputPassword1" placeholder="Votre message">{% if validFields.message %}{{ validFields.message }}{% endif %}</textarea>
+                <textarea type="text" name="message" rows="5"
+                          class="form-control {% if validFields.message %}is-valid{% elseif flashs.errorMessage %}is-invalid{% endif %}"
+                          id="exampleInputPassword1"
+                          placeholder="Votre message">{% if validFields.message %}{{ validFields.message }}{% endif %}</textarea>
                 <div class="valid-feedback">
                     Message valide !
                 </div>

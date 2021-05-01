@@ -36,7 +36,9 @@ class HomeController extends AbstractController
         $session = new Session();
         $flashs = $session->getFlashBag()->get('success', []);
 
-        return new Response($this->render('home/index.html.twig'));
+        return new Response($this->render('home/index.html.twig', [
+            'flashs' => $flashs
+        ]));
     }
 
     /**

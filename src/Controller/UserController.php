@@ -87,10 +87,11 @@ class UserController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function login(Request $request)
+    public function login(Request $request): Response
     {
         $email = $request->request->get('email');
         $password = $request->request->get('password');
@@ -103,8 +104,10 @@ class UserController extends AbstractController
             $this->authentication->setSession($this->userRepository->findEmail($email));
             $this->session->getFlashBag()->add('success', 'Vous êtes maintenant connecté !');
         }
-
-        return new RedirectResponse('/');
+        $flashs = $this->session->getFlashBag()->all();
+        return new Response($this->render('home/index.html.twig', [
+            'flashs' => $flashs
+        ]));
     }
 
     /**
@@ -120,13 +123,17 @@ class UserController extends AbstractController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
-    public function logout(): RedirectResponse
+    public function logout(): Response
     {
         $this->session->clear();
         $this->session->getFlashBag()->add('success', 'Vous avez été déconnecté avec succès !');
-        return new RedirectResponse('/');
+        $flashs = $this->session->getFlashBag()->all();
+        return new Response($this->render('home/index.html.twig', [
+            'flashs' => $flashs
+        ]));
     }
 
     /**

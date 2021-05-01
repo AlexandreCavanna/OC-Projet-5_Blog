@@ -3,9 +3,7 @@
 namespace App\Config;
 
 use FireStorm\Framework;
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation;
@@ -15,9 +13,6 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 $containerBuilder = new ContainerBuilder();
-
-$loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
-$loader->load('../src/Config/services.yml');
 
 $containerBuilder->register('context', Routing\RequestContext::class);
 

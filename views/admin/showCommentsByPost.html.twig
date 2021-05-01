@@ -27,7 +27,7 @@
                                 {% endif %}
                             </p>
                             <a class="btn btn-success"
-                               href="/admin/post/{{ comment.post_id }}/comment/{{ comment.id }}/approve">Approuver</a>
+                               href="/admin/post/{{ comment.postId }}/comment/{{ comment.id }}/approve">Approuver</a>
                             <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ comment.id }}">Supprimer</button>
                             <div class="modal fade" id="deleteModal{{ comment.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -50,9 +50,9 @@
                             </div>
                             <hr>
                             <p class="float-right">
-                            {{ comment.modify_At is empty
-                            ? 'Publié le ' ~ comment.created_At|date("d/m/Y à H\\hi")
-                            : 'Modifié le ' ~ comment.modify_At|date("d/m/Y à H\\hi")
+                            {{ comment.modifyAt is empty
+                            ? 'Publié le ' ~ comment.createdAt|date("d/m/Y à H\\hi")
+                            : 'Modifié le ' ~ comment.modifyAt|date("d/m/Y à H\\hi")
                             }}
                             </p>
                         </div>
@@ -60,8 +60,10 @@
                 </div>
             {% endfor %}
             {% if comments is empty %}
-                <div class="col-11 text-center alert alert-warning">
-                    <strong>Attention :</strong> Ce <a href="/post/{{ postId }}" class="alert-link">Post</a>, n'a pas encore de commentaire(s) publié(s).
+                <div class="col-12 text-center">
+                    <div class="alert alert-warning">
+                        <strong>Attention :</strong> Ce <a href="/post/{{ postId }}" class="alert-link">Post</a>, n'a pas encore de commentaire(s) publié(s).
+                    </div>
                 </div>
             {% endif %}
         </div>

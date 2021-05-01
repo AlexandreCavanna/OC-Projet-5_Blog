@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Service\Mail;
 use FireStorm\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -35,20 +36,55 @@ class HomeController extends AbstractController
         $session = new Session();
         $flashs = $session->getFlashBag()->get('success', []);
 
-        return new Response($this->render('home/index.html.twig', [
-            'flashs' => $flashs,
-            ]));
+        return new Response($this->render('home/index.html.twig'));
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function mailer(): RedirectResponse
+    public function mailer(Request $request): Response
     {
-        $mail = new Mail();
-        $mail->sendMail();
-        $this->session->getFlashBag()->add('success', 'Votre message à été envoyé.');
-        return new RedirectResponse('/');
+        $requestMethod = $request->server->get('REQUEST_METHOD');
+
+        $fullname = $request->request->get('name');
+        $email = $request->request->get('email');
+        $message = nl2br($request->request->get('message'));
+
+        $validFields = [];
+        if ($requestMethod === "POST") {
+            if (!empty($fullname) && !empty($email) && !empty($message)) {
+                $mail = new Mail();
+                $mail->sendMail();
+                $this->session->getFlashBag()->add('success', 'Votre message à été envoyé.');
+            }
+        }
+
+        $mailValues = $request->request->all();
+        foreach ($mailValues as $key => $item) {
+            if (!empty($item)) {
+                $this->session->getFlashBag()->add('success' . ucfirst($key), 'Le champ' . ucfirst($key) . ' est valide !');
+
+                if (empty($validFields[$key])) {
+                    $validFields[$key] = $item;
+                }
+            } elseif (array_key_exists($key, $validFields) === false) {
+                $this->session->getFlashBag()->add('error', 'Tout les champs n\'ont pas été remplis !');
+                $this->session->getFlashBag()->add('error' . ucfirst($key), 'Le champ "' . ucfirst($key) . '" n\'a pas été remplis');
+            }
+        }
+
+        $flashs = $this->session->getFlashBag()->all();
+
+        if (isset($flashs['error'])) {
+            $tab = array_unique($flashs['error']);
+            $flashs['error'] = $tab;
+        }
+
+        return new Response($this->render('home/index.html.twig', [
+            'flashs' => $flashs,
+            'validFields' => $validFields
+        ]));
     }
 }

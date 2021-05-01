@@ -16,7 +16,7 @@
                                 <span class="badge badge-pill badge-warning">{{ comment.status }}</span>
                             </p>
                             <a class="btn btn-success"
-                               href="/admin/post/{{ comment.post_id }}/comment/{{ comment.id }}/approve">Approuver</a>
+                               href="/admin/post/{{ comment.postId }}/comment/{{ comment.id }}/approve">Approuver</a>
                             <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModalComment{{ comment.id }}">Supprimer</button>
                             <div class="modal fade" id="deleteModalComment{{ comment.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -39,9 +39,9 @@
                             </div>
                             <hr>
                             <p class="float-right">
-                                {{ comment.modify_At is empty
-                                ? 'Publié le ' ~ comment.created_At|date("d/m/Y à H\\hi")
-                                : 'Modifié le ' ~ comment.modify_At|date("d/m/Y à H\\hi")
+                                {{ comment.modifyAt is empty
+                                ? 'Publié le ' ~ comment.createdAt|date("d/m/Y à H\\hi")
+                                : 'Modifié le ' ~ comment.modifyAt|date("d/m/Y à H\\hi")
                                 }}
                             </p>
                         </div>
@@ -50,8 +50,10 @@
             {% endif %}
         {% endfor %}
         {% if hasCommentPendingReview == false %}
-            <div class="col-11 text-center alert alert-warning">
-                <strong>Attention :</strong> Aucun commentaire(s), n'a besoin d'être examiné.
+            <div class="col-12 text-center">
+                <div class="alert alert-warning">
+                    <strong>Attention :</strong> Aucun commentaire(s), n'a besoin d'être examiné.
+                </div>
             </div>
         {% endif %}
     </div>

@@ -16,9 +16,9 @@
                     </div>
                     <div class="card-footer text-muted">
                         <span class="float-right">
-                            {{ post.modify_At is empty
-                                ? 'Publié le ' ~ post.created_At|date("d/m/Y à H\\hi")
-                                : 'Modifié le ' ~ post.modify_At|date("d/m/Y à H\\hi")
+                            {{ post.modifyAt is empty
+                                ? 'Publié le ' ~ post.createdAt|date("d/m/Y à H\\hi")
+                                : 'Modifié le ' ~ post.modifyAt|date("d/m/Y à H\\hi")
                             }}
                         </span>
                     </div>

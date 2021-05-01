@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edition du post{% endblock %}
+{% block title %}Création du post{% endblock %}
 
 {% block body %}
     <div class="container flex-fill">
@@ -9,14 +9,13 @@
                 <div class="col">
                     <div class="alert alert-dismissible alert-{% if flashs.error %}danger{% elseif flashs.success %}success{% endif %} mb-0">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <span><strong><i
-                                        class="fas fa-exclamation-triangle"></i>&ensp;{{ flashs.error ? flashs.error[0] : flashs.success[0] }}</strong></span>
+                       <span><strong> {% if flashs.error %}<i class="fas fa-exclamation-triangle"></i>{% endif %}&ensp;{{ flashs.error ? flashs.error[0] : flashs.success[0] }}</strong></span>
                     </div>
                 </div>
             </div>
         {% endif %}
-        <h1>Modifier le post #{{ post.id }}</h1>
-        <form class="needs-validation mb-4" action="edit" method="post">
+        <h1>Création du post</h1>
+        <form class="needs-validation mb-4" action="new" method="post">
             <div class="row">
                 <div class="col-12 col-sm-6 form-group form">
                     <label for="InputTitle" class="form-label">Titre</label>
@@ -75,12 +74,12 @@
                         Contenu valide !
                     </div>
                     <div class="invalid-feedback">
-                        {% if flashs.errorLengthContent[0] %}Le contenu fait plus de 1600 caractères !{% else %}Champ "Contenu" vide !{% endif %}
+                        {% if flashs.errorLengthContent[0] %}Le contenu fait plus de 255 caractères !{% else %}Champ "Contenu" vide !{% endif %}
                     </div>
                 </div>
             </div>
             <div class="text-md-left text-center">
-                <button type="submit" class="btn btn-primary">Editer</button>
+                <button type="submit" class="btn btn-primary">Créer</button>
             </div>
         </form>
     </div>

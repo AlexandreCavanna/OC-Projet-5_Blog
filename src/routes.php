@@ -75,7 +75,9 @@ $routes->add('index', new Route('/admin', [
     '_controller' => [AdminController::class, 'index'],
 ]));
 
-$routes->add('show_post_comments', new Route('/admin/post/{id}/comments', [
+$routes->add('show_post_comments', new Route(
+    '/admin/post/{id}/comments',
+    [
     '_controller' => [AdminController::class, 'showCommentsByPost'],
     'id' => null
     ],
@@ -86,32 +88,61 @@ $routes->add('show_post_comments', new Route('/admin/post/{id}/comments', [
     'GET'
 ));
 
-$routes->add('approve_post_comment', new Route('/admin/post/{idPost}/comment/{idComment}/approve', [
+$routes->add('approve_post_comment', new Route(
+    '/admin/post/{idPost}/comment/{idComment}/approve',
+    [
     '_controller' => [AdminController::class, 'approveComment'],
     'idPost' => null,
     'idComment' => null
     ],
 ));
 
-$routes->add('edit_post', new Route('/admin/post/{id}/edit', [
+$routes->add('show_post', new Route(
+    '/admin/post/new',
+    [
+    '_controller' => [AdminController::class, 'createPost'],
+],
+    [],
+    [],
+    null,
+    [],
+    'GET'
+));
+
+$routes->add('create_post', new Route(
+    '/admin/post/new',
+    [
+    '_controller' => [AdminController::class, 'createPost'],
+    ],
+));
+
+$routes->add('edit_post', new Route(
+    '/admin/post/{id}/edit',
+    [
     '_controller' => [AdminController::class, 'editPost'],
     'id' => null,
 ],
 ));
 
-$routes->add('delete_post', new Route('/admin/post/{id}/delete', [
+$routes->add('delete_post', new Route(
+    '/admin/post/{id}/delete',
+    [
     '_controller' => [AdminController::class, 'deletePost'],
     'id' => null,
 ],
 ));
 
-$routes->add('delete_comment', new Route('/admin/comment/{id}/delete', [
+$routes->add('delete_comment', new Route(
+    '/admin/comment/{id}/delete',
+    [
     '_controller' => [AdminController::class, 'deleteComment'],
     'id' => null,
 ],
 ));
 
-$routes->add('report_comment', new Route('comment/{id}/report', [
+$routes->add('report_comment', new Route(
+    'comment/{id}/report',
+    [
     '_controller' => [UserController::class, 'reportComment'],
     'id' => null,
 ],

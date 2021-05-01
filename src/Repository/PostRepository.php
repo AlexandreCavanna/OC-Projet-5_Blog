@@ -6,22 +6,21 @@ namespace App\Repository;
 use App\Entity\Post;
 use FireStorm\AbstractRepository;
 use PDO;
-use PDOStatement;
 
 class PostRepository extends AbstractRepository
 {
     /**
-     * @return array
+     * @return array|null
      */
-    public function getPosts(): array
+    public function getPosts(): ?array
     {
         $db = $this->getDb();
-        $query =  $db->prepare('SELECT * FROM post ORDER BY created_at DESC');
+        $query =  $db->prepare('SELECT * FROM post ORDER BY createdAt DESC');
         $query->execute();
         while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
             $var[] = new Post($data);
         }
-        return $var;
+        return $var ?? null;
     }
 
     /**
@@ -48,13 +47,14 @@ class PostRepository extends AbstractRepository
     public function updatePost($id, $title, $chapo, $author, $content): bool
     {
         $db = $this->getDb();
-        $query =  $db->prepare('UPDATE post SET title = :title, chapo = :chapo, author = :author, content = :content, modify_at = NOW() WHERE id = :id');
+        $query =  $db->prepare('UPDATE post SET title = :title, chapo = :chapo, author = :author, content = :content, modifyAt = NOW() WHERE id = :id');
         $query->bindParam(':id', $id, PDO::PARAM_INT);
         return $query->execute([
+            'id' => $id,
             'title' => $title,
             'chapo' => $chapo,
             'author' => $author,
-            'content' => $content
+            'content' => $content,
         ]);
     }
 
@@ -66,5 +66,24 @@ class PostRepository extends AbstractRepository
     {
         $req = $this->getDb()->prepare('DELETE FROM post WHERE id = ?');
         return $req->execute([$id]);
+    }
+
+    /**
+     * @param string $title
+     * @param string $chapo
+     * @param string $author
+     * @param string $content
+     * @return void
+     */
+    public function createPost(string $title, string $chapo, string $author, string $content): void
+    {
+        $sql = "INSERT INTO post(title, chapo, author, content, createdAt) VALUES (:title, :chapo, :author, :content, NOW())";
+        $fields =[
+            'title' => $title,
+            'chapo' => $chapo,
+            'author' => $author,
+            'content' => $content
+        ];
+        $this->create($sql, $fields);
     }
 }

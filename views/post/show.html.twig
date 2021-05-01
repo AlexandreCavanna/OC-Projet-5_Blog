@@ -16,26 +16,30 @@
                         </div>
                         <div class="card-footer text-muted">
                         <span class="float-right">
-                            {{ post.modify_At is empty
-                            ? 'Publié le ' ~ post.created_At|date("d/m/Y à H\\hi")
-                            : 'Modifié le ' ~ post.modify_At|date("d/m/Y à H\\hi")
+                            {{ post.modifyAt is empty
+                            ? 'Publié le ' ~ post.createdAt|date("d/m/Y à H\\hi")
+                            : 'Modifié le ' ~ post.modifyAt|date("d/m/Y à H\\hi")
                             }}
                         </span>
                         </div>
                     </div>
                     {% for comment in comments %}
-                        {% if comment.status is same as 'Approuvé'%}
+                        {% if comment.status is same as 'Approuvé' or comment.status is same as 'Signalé'%}
                             <div class="card my-4">
                                 <label class="card-header card-header-sm" for="commentForm">Commentaire #{{ comment.id }}</label>
                                 <div class="card-body card-body-sm">
                                     {{ comment.content }}
+                                    {% if comment.status is same as 'Signalé' %}
+                                       <a class="btn btn-danger float-right disabled" href="/comment/{{ comment.id }}/report">Commentaire déjà Signalé</a>
+                                    {% else%}
                                     <a class="btn btn-danger float-right" href="/comment/{{ comment.id }}/report">Signaler</a>
+                                    {% endif %}
                                 </div>
                                 <div class="card-footer">
                                     <span class="float-right">
-                                    {{ comment.modify_At is empty
-                                    ? 'Publié le ' ~ comment.created_At|date("d/m/Y à H\\hi")
-                                    : 'Modifié le ' ~ comment.modify_At|date("d/m/Y à H\\hi")
+                                    {{ comment.modifyAt is empty
+                                    ? 'Publié le ' ~ comment.createdAt|date("d/m/Y à H\\hi")
+                                    : 'Modifié le ' ~ comment.modifyAt|date("d/m/Y à H\\hi")
                                     }}
                                     </span>
                                 </div>

@@ -2,16 +2,16 @@
 
 {% block body %}
     <div class="container">
-            {% for flash in flashs %}
-                <div class="row">
-                    <div class="col">
-                        <div class="alert alert-dismissible alert-success mb-0">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <div><strong>{{ flash }}</strong></div>
-                        </div>
+        {% if flashs.error or flashs.success %}
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-dismissible alert-{% if flashs.error %}danger{% elseif flashs.success %}success{% endif %} mb-0">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <span><strong> {% if flashs.error %}<i class="fas fa-exclamation-triangle"></i>{% endif %}&ensp;{{ flashs.error ? flashs.error[0] : flashs.success[0] }}</strong></span>
                     </div>
                 </div>
-            {% endfor %}
+            </div>
+        {% endif %}
         <div class="row py-4">
             <div class="col-lg-4 col-md-12 text-center mb-4" id="picture">
                 <img src="/img/alexandre-cavanna.jpg" alt="Alexandre CAVANNA" class="rounded img-fluid">
@@ -54,19 +54,39 @@
             <h2 class="text-center" id="contact">Contact</h2>
             <div class="form-group">
                 <label for="exampleInputName1">Nom / Prénom</label>
-                <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" placeholder="Entrez votre nom et prénom" required>
+                <input type="text" name="name" class="form-control {% if validFields.name %}is-valid{% elseif flashs.errorName %}is-invalid{% endif %}" id="exampleInputEmail1" aria-describedby="nameHelp" placeholder="Entrez votre nom et prénom" {% if validFields.name %}value="{{ validFields.name }}"{% endif %}>
+                <div class="valid-feedback">
+                    Nom / Prénom valide !
+                </div>
+                <div class="invalid-feedback">
+                    Champ " Nom / Prénom" vide !
+                </div>
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Adresse email</label>
-                <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre email" required>
+                <input type="email" name="email" class="form-control {% if validFields.email %}is-valid{% elseif flashs.errorEmail %}is-invalid{% endif %}" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre email" {% if validFields.email %}value="{{ validFields.email }}"{% endif %}>
                 <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre e-mail avec une
                     autre personne .</small>
+                <div class="valid-feedback">
+                    Email valide !
+                </div>
+                <div class="invalid-feedback">
+                    Champ "Email" vide !
+                </div>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Message</label>
-                <textarea type="text" name="message" rows="5" class="form-control" id="exampleInputPassword1" placeholder="Votre message" required></textarea>
+                <textarea type="text" name="message" rows="5" class="form-control {% if validFields.message %}is-valid{% elseif flashs.errorMessage %}is-invalid{% endif %}" id="exampleInputPassword1" placeholder="Votre message">{% if validFields.message %}{{ validFields.message }}{% endif %}</textarea>
+                <div class="valid-feedback">
+                    Message valide !
+                </div>
+                <div class="invalid-feedback">
+                    Champ "Message" vide !
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary mb-4">Envoyer</button>
+            <div class="text-md-left text-center">
+                <button type="submit" class="btn btn-primary mb-4">Envoyer</button>
+            </div>
         </form>
     </div>
 

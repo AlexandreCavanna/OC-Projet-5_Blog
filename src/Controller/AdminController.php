@@ -118,7 +118,6 @@ class AdminController extends AbstractController
         $content = nl2br($request->request->get('content'));
         $validFields = [];
         if ($requestMethod === "POST") {
-
             if (!empty($title) && !empty($chapo) && !empty($author) && !empty($content) && strlen($chapo) <= 255 && strlen($content) <= 1600) {
                 $this->postRepository->updatePost(
                     $id,
@@ -131,26 +130,9 @@ class AdminController extends AbstractController
                 $this->session->getFlashBag()->add('success', 'Votre post est désormais modifié !');
                 return new RedirectResponse('/admin/post/'.$id.'/edit');
             }
-
-            $postsValues =$request->request->all();
-            foreach ($postsValues as $key => $item) {
-                if (empty($item)) {
-                    $this->session->getFlashBag()->add('error', 'Tout les champs n\'ont pas été remplis !');
-                    $this->session->getFlashBag()->add('error'.ucfirst($key), 'Le champ "'.ucfirst($key).'" n\'a pas été remplis');
-                } elseif (strlen($postsValues['chapo']) > 255) {
-                    $this->session->getFlashBag()->add('errorLengthChapo', 'Le champ "Chapô" fait plus de 255 caractères !');
-                } elseif (strlen($postsValues['content']) > 1600) {
-                    $this->session->getFlashBag()->add('errorLengthContent', 'Le champ "Contenu" fait plus de 1600 caractères !');
-                } else {
-                    $validFields[$key] = $item;
-
-                    $this->session->getFlashBag()->add('success'.ucfirst($key), 'Le champ'.ucfirst($key).' est valide !');
-                }
-
-            }
         }
 
-        $flashs = $this->session->getFlashBag()->all();
+        list($validFields, $flashs) = $this->validation($request, $validFields);
 
         return new Response($this->render('admin/editPost.html.twig', [
                 'post' => $post,
@@ -161,10 +143,9 @@ class AdminController extends AbstractController
 
     /**
      * @param $id
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deletePost($id, Request $request): RedirectResponse
+    public function deletePost($id): RedirectResponse
     {
         if ($this->authentication->denyAccessAdmin() instanceof RedirectResponse) {
             return $this->authentication->denyAccessAdmin();
@@ -176,10 +157,9 @@ class AdminController extends AbstractController
 
     /**
      * @param $id
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteComment($id, Request $request): RedirectResponse
+    public function deleteComment($id): RedirectResponse
     {
         if ($this->authentication->denyAccessAdmin() instanceof RedirectResponse) {
             return $this->authentication->denyAccessAdmin();
@@ -191,5 +171,92 @@ class AdminController extends AbstractController
 
 
         return new RedirectResponse('/admin/post/'.$idPost.'/comments');
+    }
+
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response|null
+     * @throws \Exception
+     */
+    public function createPost(Request $request)
+    {
+        if ($this->authentication->denyAccessAdmin() instanceof RedirectResponse) {
+            return $this->authentication->denyAccessAdmin();
+        }
+        $title = $request->request->get('title');
+        $chapo = nl2br($request->request->get('chapo'));
+        $author = $request->request->get('author');
+        $content = nl2br($request->request->get('content'));
+        $requestMethod = $request->server->get('REQUEST_METHOD');
+        $validFields = [];
+
+        if ($requestMethod === "POST") {
+            if (!empty($title) && !empty($chapo) && !empty($author) && !empty($content) && strlen($chapo) <= 255 && strlen($content) <= 1600) {
+                $this->postRepository->createPost($title, $chapo, $author, $content);
+
+                $this->session->getFlashBag()->add('success', 'Votre post est désormais créé !');
+
+                return new RedirectResponse('/admin/post/new');
+            }
+        }
+
+        list($validFields, $flashs) = $this->validation($request, $validFields);
+
+        return new Response($this->render('admin/createPost.html.twig', [
+            'flashs' => $flashs,
+            'validFields' => $validFields,
+        ]));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param array $validFields
+     * @return array
+     */
+    private function validation(Request $request, array $validFields): array
+    {
+        $postsValues = $request->request->all();
+        foreach ($postsValues as $key => $item) {
+            if (!empty($item)) {
+                $this->session->getFlashBag()->add('success' . ucfirst($key), 'Le champ' . ucfirst($key) . ' est valide !');
+
+                if (empty($validFields[$key])) {
+                    $validFields[$key] = $item;
+                }
+
+                if (strlen($postsValues['chapo']) > 255) {
+                    $this->session->getFlashBag()->add('errorLengthChapo', 'Le champ "Chapô" fait plus de 255 caractères !');
+                    unset($validFields['chapo']);
+                }
+
+                if (strlen($postsValues['content']) > 1600) {
+                    $this->session->getFlashBag()->add('errorLengthContent', 'Le champ "Contenu" fait plus de 1600 caractères !');
+                    unset($validFields['content']);
+                }
+            } elseif (array_key_exists($key, $validFields) === false) {
+                $this->session->getFlashBag()->add('error', 'Tout les champs n\'ont pas été remplis !');
+                $this->session->getFlashBag()->add('error' . ucfirst($key), 'Le champ "' . ucfirst($key) . '" n\'a pas été remplis');
+            }
+        }
+
+        $flashs = $this->session->getFlashBag()->all();
+
+        if (isset($flashs['errorLengthChapo'])) {
+            $tab = array_unique($flashs['errorLengthChapo']);
+            $flashs['errorLengthChapo'] = $tab;
+        }
+
+        if (isset($flashs['errorLengthContent'])) {
+            $tab = array_unique($flashs['errorLengthContent']);
+            $flashs['errorLengthContent'] = $tab;
+        }
+
+        if (isset($flashs['error'])) {
+            $tab = array_unique($flashs['error']);
+            $flashs['error'] = $tab;
+        }
+
+        return [$validFields, $flashs];
     }
 }

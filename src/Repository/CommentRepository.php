@@ -15,11 +15,11 @@ class CommentRepository extends AbstractRepository
      */
     public function createComment(string $content, int $postId)
     {
-        $sql = 'INSERT INTO comment(content, post_id) VALUES(:content, :post_id)';
+        $sql = 'INSERT INTO comment(content, postId) VALUES(:content, :postId)';
 
         $field = [
             'content' => $content,
-            'post_id' => $postId,
+            'postId' => $postId,
         ];
 
         $this->create($sql, $field);
@@ -32,7 +32,7 @@ class CommentRepository extends AbstractRepository
     public function getCommentsByPost($id): ?array
     {
         $db = $this->getDb();
-        $query =  $db->prepare('SELECT * FROM comment WHERE post_id = ?');
+        $query =  $db->prepare('SELECT * FROM comment WHERE postId = ?');
         $query->execute([$id]);
 
         while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
@@ -99,15 +99,18 @@ class CommentRepository extends AbstractRepository
         $query->execute();
     }
 
+    /**
+     * @return mixed
+     */
     public function countNeedReview()
     {
         $db = $this->getDb();
-        $sql = "SELECT post_id,
+        $sql = "SELECT postId,
                     (SELECT COUNT(status) from comment WHERE status = 'Approuvé')+
                     (SELECT COUNT(status) from comment WHERE status = \"Besoin d'un examen\")  
                 AS NeedReview
                 FROM comment
-                GROUP BY post_id";
+                GROUP BY postId";
 
         $query =  $db->prepare($sql);
         $query->execute();

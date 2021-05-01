@@ -1,3 +1,23 @@
+## [1.3.0](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/compare/v1.2.0...v1.3.0) (2021-05-01)
+
+
+### :memo: Documentation
+
+* **readme:** add new step to install the project ([4299f03](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/4299f030c7b0356d4d0dd3fd409ff16db2506a52))
+
+
+### :sparkles: Features
+
+* **authentication:** improve access to back office ([f24f907](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/f24f9075237374c8f724314b923487d6a4fb3b51))
+* **back-office:** add back office to manage posts and comments ([662eb29](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/662eb2999c9cd3eeb0c976165f4060195481322f))
+* **back-office:** add update and delete query for posts - some php doc - refacto ([9fbbdd6](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/9fbbdd6bae1f0864692c62f64fddf53c1b2adc3d))
+* **configuration:** add charset to database config ([61c401b](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/61c401bdfdb6478990868571fe72af9599b90a50))
+
+
+### :bug: Bug Fixes
+
+* **code quality:** fix symfony insight ([cd057d6](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/cd057d6c66481142549bed16694767c74b66a483))
+
 ## [1.2.0](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/compare/v1.1.0...v1.2.0) (2021-04-19)
 
 

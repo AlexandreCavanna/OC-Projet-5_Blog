@@ -1,3 +1,10 @@
+### [1.3.2](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/compare/v1.3.1...v1.3.2) (2021-05-01)
+
+
+### :bug: Bug Fixes
+
+* **homepage:** fix flashs login/logout ([6f01ef0](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/commit/6f01ef032076e58db722f61bc6132ee3c1145f63))
+
 ### [1.3.1](https://github.com/AlexandreCavanna/OC-Projet-5_Blog/compare/v1.3.0...v1.3.1) (2021-05-01)
 
 
